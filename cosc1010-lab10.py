@@ -1,12 +1,11 @@
-# Your Name Here
+# Connor Fisbeck
 # UWYO COSC 1010
-# Submission Date
-# Lab XX
-# Lab Section: 
+# 11/20/2024
+# Lab10
+# Lab Section: 15
 # Sources, people worked with, help given to: 
-# your
-# comments
-# here
+# Lecture slides
+# python crash course
 
 #import modules you will need 
 
@@ -43,34 +42,37 @@ def get_hash(to_hash):
 # Hash each individual password and compare it against the stored hash.
 # - When you find the match, print the plaintext version of the password.
 # - End your loop.
+#####################################################################################################
 
 #specify file paths
 hash_file = Path('hash')
 rockyoufile = Path('rockyou.txt')
 
 #open and read the hash file
+keep_going = True
 try:
     given_hash = hash_file.read_text()
 except FileNotFoundError:
     print(f"'{hash_file}' file not found.")
+    keep_going = False
 else: 
     HashToCrack = given_hash
 
-
-try:
-    passwords = rockyoufile.read_text()
-except FileNotFoundError:
-    print(f"'{rockyoufile}' file not found.")
-else:
-    # split rockyou.txt into lines
-    rockyouLines = passwords.splitlines()
-    
-    #check lines one at a time converting the password to a hash 
-    for line in rockyouLines:
-        password = line.strip()
-        new_hash = get_hash(password)
+if keep_going == True:
+    try:
+        passwords = rockyoufile.read_text()
+    except FileNotFoundError:
+        print(f"'{rockyoufile}' file not found.")
+    else:
+        # split rockyou.txt into lines
+        rockyouLines = passwords.splitlines()
         
-        #if created hash is the given hash, print the password
-        if new_hash == HashToCrack:
-            print(f"The password is {password}")
-            break
+        #check lines one at a time converting the password to a hash 
+        for line in rockyouLines:
+            password = line.strip()
+            new_hash = get_hash(password)
+            
+            #if created hash is the given hash, print the password
+            if new_hash == HashToCrack:
+                print(f"The password is {password}")
+                break
