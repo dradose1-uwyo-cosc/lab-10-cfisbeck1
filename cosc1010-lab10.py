@@ -43,3 +43,34 @@ def get_hash(to_hash):
 # Hash each individual password and compare it against the stored hash.
 # - When you find the match, print the plaintext version of the password.
 # - End your loop.
+
+#specify file paths
+hash_file = Path('hash')
+rockyoufile = Path('rockyou.txt')
+
+#open and read the hash file
+try:
+    given_hash = hash_file.read_text()
+except FileNotFoundError:
+    print(f"'{hash_file}' file not found.")
+else: 
+    HashToCrack = given_hash
+
+
+try:
+    passwords = rockyoufile.read_text()
+except FileNotFoundError:
+    print(f"'{rockyoufile}' file not found.")
+else:
+    # split rockyou.txt into lines
+    rockyouLines = passwords.splitlines()
+    
+    #check lines one at a time converting the password to a hash 
+    for line in rockyouLines:
+        password = line.strip()
+        new_hash = get_hash(password)
+        
+        #if created hash is the given hash, print the password
+        if new_hash == HashToCrack:
+            print(f"The password is {password}")
+            break
