@@ -49,30 +49,34 @@ hash_file = Path('hash')
 rockyoufile = Path('rockyou.txt')
 
 #open and read the hash file
-keep_going = True
 try:
     given_hash = hash_file.read_text()
 except FileNotFoundError:
     print(f"'{hash_file}' file not found.")
-    keep_going = False
+    
 else: 
     HashToCrack = given_hash
 
-if keep_going == True:
-    try:
-        passwords = rockyoufile.read_text()
-    except FileNotFoundError:
-        print(f"'{rockyoufile}' file not found.")
-    else:
-        # split rockyou.txt into lines
-        rockyouLines = passwords.splitlines()
+try:
+    passwords = rockyoufile.read_text()
+except FileNotFoundError:
+    print(f"'{rockyoufile}' file not found.")
+else:
+    # split rockyou.txt into lines
+    rockyouLines = passwords.splitlines()
         
-        #check lines one at a time converting the password to a hash 
-        for line in rockyouLines:
-            password = line.strip()
-            new_hash = get_hash(password)
+    #check lines one at a time converting the password to a hash 
+    for line in rockyouLines:
+        password = line.strip()
+        new_hash = get_hash(password)
             
-            #if created hash is the given hash, print the password
+        #if created hash is the given hash, print the password
+        try:
+            HashToCrack 
+        except NameError:
+            print("name error")
+        else:
             if new_hash == HashToCrack:
                 print(f"The password is {password}")
                 break
+        
